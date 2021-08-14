@@ -23,11 +23,11 @@ RUN mkdir /opt/bin && cp /src/build/docker_openr_helper.sh /opt/bin
 
 # We need g++-10 or higher for coroutines which are used in folly::coro
 # yum install -y gcc-toolset-10-gcc-c++ doesn't work
+ENV GCC_VERSION=11.2.0
 RUN dnf update -y && \
     dnf -y group install "Development Tools" && \
     yum config-manager --set-enabled powertools && \
     dnf -y install libmpc-devel && \
-    export GCC_VERSION=11.2.0 && \
     curl -O http://gnu.mirror.constant.com/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.gz && \
     tar zxf gcc-$GCC_VERSION.tar.gz && \
     mkdir gcc-build && cd gcc-build && \
