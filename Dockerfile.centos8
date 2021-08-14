@@ -5,10 +5,8 @@ FROM centos:8
 
 # Install tools needed for development
 RUN yum update -y && \
-    yum upgrade -y 
-
-# && \
-RUN yum install -y gcc gcc-c++ make cmake autoconf automake libtool python3 git openssl-devel m4 python3-pip && pip3 install cython
+    yum upgrade -y && \
+    yum install -y gcc gcc-c++ make cmake autoconf automake libtool python3 git openssl-devel m4 python3-pip
 
 # Copy needed source
 RUN mkdir /src
@@ -42,6 +40,7 @@ RUN dnf update -y && \
    ln -sf /usr/local/bin/g++ /usr/bin/g++-10
 
 # Install `breeze` OpenR CLI, needs python38-Cython (3.8)
+# pip3 install cython needed?
 RUN yum install -y python38-Cython python36-devel && ln -sf /usr/local/bin/cython /usr/bin/cython3
 COPY build/cython_compile.py /src/build/cython_compile.py
 
