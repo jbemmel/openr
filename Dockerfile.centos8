@@ -22,23 +22,24 @@ RUN cd /src && build/build_openr.sh && chmod 644 /etc/openr.conf
 RUN mkdir /opt/bin && cp /src/build/docker_openr_helper.sh /opt/bin
 
 # We need g++-10 or higher for coroutines which are used in folly::coro
-RUN yum install -y gcc-toolset-10-gcc-c++ && \
-    ln -sf /usr/bin/gcc /usr/bin/gcc-10 && \
-    ln -sf /usr/bin/g++ /usr/bin/g++-10
+# This binary doesn't support -fcoroutines :(
+# RUN yum install -y gcc-toolset-10-gcc-c++ && \
+#    ln -sf /usr/bin/gcc /usr/bin/gcc-10 && \
+#    ln -sf /usr/bin/g++ /usr/bin/g++-10
 
 # Alternatively build gcc from source - takes a LONG time
-# ENV GCC_VERSION=11.2.0
-# RUN dnf update -y && \
-#    dnf -y group install "Development Tools" && \
-#    yum config-manager --set-enabled powertools && \
-#    dnf -y install libmpc-devel && \
-#    curl -O http://gnu.mirror.constant.com/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.gz && \
-#    tar zxf gcc-$GCC_VERSION.tar.gz && \
-#    mkdir gcc-build && cd gcc-build && \
-#    ../gcc-$GCC_VERSION/configure --enable-languages=c,c++ --disable-multilib && \
-#    make -j$(nproc) && make install && \
-#    ln -sf /usr/local/bin/gcc /usr/bin/gcc-10 && \
-#    ln -sf /usr/local/bin/g++ /usr/bin/g++-10
+ENV GCC_VERSION=11.2.0
+RUN dnf update -y && \
+   dnf -y group install "Development Tools" && \
+   yum config-manager --set-enabled powertools && \
+   dnf -y install libmpc-devel && \
+   curl -O http://gnu.mirror.constant.com/gcc/gcc-$GCC_VERSION/gcc-$GCC_VERSION.tar.gz && \
+   tar zxf gcc-$GCC_VERSION.tar.gz && \
+   mkdir gcc-build && cd gcc-build && \
+   ../gcc-$GCC_VERSION/configure --enable-languages=c,c++ --disable-multilib && \
+   make -j$(nproc) && make install && \
+   ln -sf /usr/local/bin/gcc /usr/bin/gcc-10 && \
+   ln -sf /usr/local/bin/g++ /usr/bin/g++-10
 
 # Install `breeze` OpenR CLI, needs python38-Cython (3.8)
 RUN yum install -y python38-Cython python38-devel
