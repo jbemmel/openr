@@ -32,7 +32,9 @@ RUN dnf update -y && \
     tar zxf gcc-$GCC_VERSION.tar.gz && \
     mkdir gcc-build && cd gcc-build && \
     ../gcc-$GCC_VERSION/configure --enable-languages=c,c++ --disable-multilib && \
-    make -j$(nproc) && make install
+    make -j$(nproc) && make install && \
+    ln -sf /usr/local/bin/gcc /usr/bin/gcc-10 && \
+    ln -sf /usr/local/bin/g++ /usr/bin/g++-10
 
 # Install `breeze` OpenR CLI, needs python38-Cython (3.8)
 RUN yum install -y python38-Cython python38-devel
