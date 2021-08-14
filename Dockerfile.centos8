@@ -47,9 +47,9 @@ COPY build/cython_compile.py /src/build/cython_compile.py
 
 # Fix Python paths on CentOS
 RUN sed -i 's|/usr/lib/python3/dist-packages|/usr/local/lib64/python3.6/site-packages|g' /src/build/build_breeze.sh
-RUN sed -i 's|-I\.|-I. -I/usr/include/python3.8|g' /src/build/build_breeze.sh
+# RUN sed -i 's|-I\.|-I. -I/usr/include/python3.8|g' /src/build/build_breeze.sh
 # RUN sed -i 's|^CXXFLAGS=|LDFLAGS="-L/root/.pyenv/versions/3.6.8/lib/python3.6/config-3.6m-x86_64-linux-gnu/" CXXFLAGS=|g' /src/build/build_breeze.sh
-RUN sed -i 's|"\.",$|".","/usr/include/python3.8",|g' /src/openr/py/setup.py
+# RUN sed -i 's|"\.",$|".","/usr/include/python3.8",|g' /src/openr/py/setup.py
 RUN sed -i 's|/usr/lib/python3.6/dist-packages|/usr/local/lib64/python3.6/site-packages|g' /src/build/cython_compile.py
 RUN sed -i 's|cython3|/usr/local/bin/cython|g' /src/build/cython_compile.py
 
@@ -64,9 +64,9 @@ RUN cp -r /src/build/lib.linux-x86_64-3.8 /breeze-build
 
 # Cleanup all we can to keep container as lean as possible
 # TODO: We can use Dockerfile stages instead
-RUN yum remove -y gcc gcc-c++ make cmake autoconf automake libtool git openssl-dev m4 gcc-toolset-10-gcc-c++ python38-Cython python38-devel && \
+RUN yum remove -y gcc gcc-c++ make cmake autoconf automake libtool git openssl-dev m4 python38-Cython python36-devel && \
     yum autoremove -y && \
-    rm -rf /src /tmp/* /var/cache/yum
+    rm -rf /src /tmp/* /var/cache/yum gcc-build
 
 CMD ["/opt/bin/docker_openr_helper.sh"]
 # Expose OpenR Thrift port
