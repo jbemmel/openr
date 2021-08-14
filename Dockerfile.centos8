@@ -47,7 +47,7 @@ COPY build/cython_compile.py /src/build/cython_compile.py
 # Fix Python paths on CentOS
 RUN sed -i 's|/usr/lib/python3/dist-packages|/usr/local/lib64/python3.6/site-packages|g' /src/build/build_breeze.sh
 RUN sed -i 's|-I\.|-I. -I/usr/include/python3.8|g' /src/build/build_breeze.sh
-RUN sed -i 's|"."|".","/usr/include/python3.8"|g' /src/openr/py/setup.py
+RUN sed -i 's|"\."|".","/usr/include/python3.8"|g' /src/openr/py/setup.py
 RUN sed -i 's|/usr/lib/python3.6/dist-packages|/usr/local/lib64/python3.6/site-packages|g' /src/build/cython_compile.py
 RUN sed -i 's|cython3|/usr/local/bin/cython|g' /src/build/cython_compile.py
 
