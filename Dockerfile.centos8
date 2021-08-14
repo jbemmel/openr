@@ -31,6 +31,10 @@ RUN sed -i 's|/src/fbthrift-thrift/gen-cpp2|/src/build/thrift/thrift/gen-cpp2|g'
 RUN sed -i 's|/usr/lib/python3.6/dist-packages|/usr/local/lib64/python3.6/site-packages|g' /src/build/cython_compile.py
 RUN sed -i 's|cython3|/usr/local/bin/cython|g' /src/build/cython_compile.py
 
+# Fix path bug in some random file
+RUN sed -i 's|thrift/lib/thrift/annotation/scope.thrift|scope.thrift|g' \
+ /tmp/fbcode_builder_getdeps-ZsrcZbuildZfbcode_builder-root/repos/github.com-facebook-fbthrift.git/thrift/lib/thrift/annotation/cpp.thrift
+
 COPY configerator/ /src/configurator/
 RUN git clone https://github.com/cython/cython
 RUN cd /src && build/build_breeze.sh
