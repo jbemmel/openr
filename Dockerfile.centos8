@@ -22,7 +22,8 @@ RUN cd /src && build/build_openr.sh && chmod 644 /etc/openr.conf
 RUN mkdir /opt/bin && cp /src/build/docker_openr_helper.sh /opt/bin
 
 # Install `breeze` OpenR CLI, add python38-Cython (3.8)
-RUN yum install -y gcc-toolset-10-gcc-c++ python38-Cython # We need g++-10 or higher for coroutines which are used in folly::coro
+RUN yum install -y gcc-toolset-10-gcc-c++ python38-Cython && \
+    ln -sf /opt/rh/gcc-toolset-10/root/usr/bin/gcc /usr/bin/gcc-10 # We need g++-10 or higher for coroutines which are used in folly::coro
 COPY build/cython_compile.py /src/build/cython_compile.py
 
 # Fix Python paths on CentOS
