@@ -55,7 +55,7 @@ RUN sed -i 's|cython3|/usr/local/bin/cython|g' /src/build/cython_compile.py
 RUN sed -i 's|thrift/lib/thrift/annotation/scope.thrift|scope.thrift|g' \
  /tmp/fbcode_builder_getdeps-ZsrcZbuildZfbcode_builder-root/repos/github.com-facebook-fbthrift.git/thrift/lib/thrift/annotation/cpp.thrift
 
-COPY configerator/ /src/neteng-thrift/configurator/
+COPY configerator/ /src/neteng-thrift/configerator/
 RUN git clone https://github.com/cython/cython
 RUN cd /src && build/build_breeze.sh
 RUN cp -r /src/build/lib.linux-x86_64-3.8 /breeze-build
