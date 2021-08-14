@@ -3,4 +3,6 @@
  ```
  sudo (fallocate -l 1G /swapfile && chmod 600 /swapfile && mkswap /swapfile && swapon /swapfile)
  ```
+ [ JvB 2021-08-13 ] OpenR builds automake when not installed, but build failed with "help2man: can't get '--help' info from automake-1.16"
+ 
  
