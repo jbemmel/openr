@@ -42,16 +42,16 @@ RUN dnf update -y && \
    ln -sf /usr/local/bin/g++ /usr/bin/g++-10
 
 # Install `breeze` OpenR CLI, needs python38-Cython (3.8)
-RUN yum install -y python38-Cython python36-devel
+RUN yum install -y python38-Cython python36-devel && ln -sf /usr/local/bin/cython /usr/bin/cython3
 COPY build/cython_compile.py /src/build/cython_compile.py
 
 # Fix Python paths on CentOS
-RUN sed -i 's|/usr/lib/python3/dist-packages|/usr/local/lib64/python3.6/site-packages|g' /src/build/build_breeze.sh
+RUN sed -i 's|/usr/lib/python3/dist-packages|/usr/local/lib64/python3.6/site-packages|g' /src/build/build_breeze.sh /src/build/cython_compile.py
 # RUN sed -i 's|-I\.|-I. -I/usr/include/python3.8|g' /src/build/build_breeze.sh
 # RUN sed -i 's|^CXXFLAGS=|LDFLAGS="-L/root/.pyenv/versions/3.6.8/lib/python3.6/config-3.6m-x86_64-linux-gnu/" CXXFLAGS=|g' /src/build/build_breeze.sh
 # RUN sed -i 's|"\.",$|".","/usr/include/python3.8",|g' /src/openr/py/setup.py
-RUN sed -i 's|/usr/lib/python3.6/dist-packages|/usr/local/lib64/python3.6/site-packages|g' /src/build/cython_compile.py
-RUN sed -i 's|cython3|/usr/local/bin/cython|g' /src/build/cython_compile.py
+# RUN sed -i 's|/usr/lib/python3.6/dist-packages|/usr/local/lib64/python3.6/site-packages|g' /src/build/cython_compile.py
+# RUN sed -i 's|cython3|/usr/local/bin/cython|g' /src/build/cython_compile.py
 
 # Fix path bug in some random file
 RUN sed -i 's|thrift/lib/thrift/annotation/scope.thrift|scope.thrift|g' \
