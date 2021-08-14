@@ -43,9 +43,9 @@ RUN cp -r /src/build/lib.linux-x86_64-3.8 /breeze-build
 
 # Cleanup all we can to keep container as lean as possible
 # TODO: We can use Dockerfile stages instead
-RUN yum remove -y gcc gcc-c++ make cmake autoconf automake libtool git openssl-dev m4 && \
+RUN yum remove -y gcc gcc-c++ make cmake autoconf automake libtool git openssl-dev m4 gcc-toolset-10-gcc-c++ python38-Cython python38-devel && \
     yum autoremove -y && \
-    rm -rf /src /tmp/* 
+    rm -rf /src /tmp/* /var/cache/yum
 
 CMD ["/opt/bin/docker_openr_helper.sh"]
 # Expose OpenR Thrift port
