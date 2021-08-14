@@ -31,7 +31,7 @@ RUN sed -i 's|/src/fbthrift-thrift/gen-cpp2|/src/build/thrift/thrift/gen-cpp2|g'
 RUN sed -i 's|/usr/lib/python3.6/dist-packages|/usr/local/lib64/python3.6/site-packages|g' /src/build/cython_compile.py
 RUN sed -i 's|cython3|/usr/local/bin/cython|g' /src/build/cython_compile.py
 
-# COPY configerator /src/ ??
+COPY configerator/ /src/configurator/
 RUN git clone https://github.com/cython/cython
 RUN cd /src && build/build_breeze.sh
 RUN cp -r /src/build/lib.linux-x86_64-3.8 /breeze-build
