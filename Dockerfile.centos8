@@ -21,13 +21,14 @@ COPY example_openr.conf /etc/openr.conf
 RUN cd /src && build/build_openr.sh && chmod 644 /etc/openr.conf
 RUN mkdir /opt/bin && cp /src/build/docker_openr_helper.sh /opt/bin
 
-# Install `breeze` OpenR CLI, skipped python3*-Cython (3.8)
-RUN yum install -y gcc-toolset-10-gcc-c++ # We need g++-10 or higher for coroutines which are used in folly::coro
+# Install `breeze` OpenR CLI, add python38-Cython (3.8)
+RUN yum install -y gcc-toolset-10-gcc-c++ python38-Cython # We need g++-10 or higher for coroutines which are used in folly::coro
 COPY build/cython_compile.py /src/build/cython_compile.py
 
 # Fix Python paths on CentOS
 RUN sed -i 's/python3/python3.6/g' /src/build/cython_compile.py
 RUN sed -i 's|/usr/lib/python3/dist-packages|/usr/local/lib64/python3.6/site-packages|g' /src/build/build_breeze.sh
+RUN sed -i 's|/src/fbthrift-thrift/gen-cpp2|/src/build/thrift/thrift/gen-cpp2|g' /src/build/build_breeze.sh
 RUN sed -i 's|/usr/lib/python3.6/dist-packages|/usr/local/lib64/python3.6/site-packages|g' /src/build/cython_compile.py
 RUN ln -sf /usr/local/bin/cython /usr/bin/cython3
 
