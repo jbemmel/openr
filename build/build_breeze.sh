@@ -84,4 +84,4 @@ CC="/usr/bin/gcc-10" \
 CXX="/usr/bin/g++-10" \
 CFLAGS="$CFLAGS" \
 CXXFLAGS="$CFLAGS" \
-python3 openr/py/setup.py build -j10
+python3 openr/py/setup.py build -j$(nproc)
