@@ -70,10 +70,18 @@ python3 /src/build/cython_compile.py
 # Step 4. Compile .so
 
 # shellcheck disable=SC2097,SC2098
+# JvB Not sure if this ever worked
+#env \
+#CC="/usr/bin/gcc-10" \
+#CXX="/usr/bin/g++-10" \
+#CFLAGS="-I. -Iopenr-thrift -Ifb303-thrift -Ifbzmq-thrift -Ineteng-thrift -std=c++20 -fcoroutines " \
+#CFLAGS="$CFLAGS -w -D_CPPLIB_VER=20" \
+#CXXFLAGS="$CFLAGS" \
+#python3 openr/py/setup.py build -j10
+export CFLAGS="-I. -Iopenr-thrift -Ifb303-thrift -Ifbzmq-thrift -Ineteng-thrift -std=c++20 -fcoroutines -w -D_CPPLIB_VER=20"
 env \
 CC="/usr/bin/gcc-10" \
 CXX="/usr/bin/g++-10" \
-CFLAGS="-I. -Iopenr-thrift -Ifb303-thrift -Ifbzmq-thrift -Ineteng-thrift -std=c++20 -fcoroutines " \
-CFLAGS="$CFLAGS -w -D_CPPLIB_VER=20" \
+CFLAGS="$CFLAGS" \
 CXXFLAGS="$CFLAGS" \
 python3 openr/py/setup.py build -j10
