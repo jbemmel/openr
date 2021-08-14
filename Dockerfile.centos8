@@ -39,9 +39,9 @@ RUN dnf update -y && \
    ln -sf /usr/local/bin/gcc /usr/bin/gcc-10 && \
    ln -sf /usr/local/bin/g++ /usr/bin/g++-10
 
-# Install `breeze` OpenR CLI, needs python38-Cython (3.8)
-# pip3 install cython needed?
-RUN yum install -y python38-Cython python36-devel && ln -sf /usr/local/bin/cython /usr/bin/cython3
+# Install `breeze` OpenR CLI, needs cython
+# python38-Cython needed?
+RUN yum install -y python36-devel && pip3 install cython && ln -sf /usr/local/bin/cython /usr/bin/cython3
 COPY build/cython_compile.py /src/build/cython_compile.py
 
 # Fix Python paths on CentOS
