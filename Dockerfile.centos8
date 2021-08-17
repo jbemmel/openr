@@ -26,7 +26,7 @@ RUN mkdir /opt/bin && cp /src/build/docker_openr_helper.sh /opt/bin
 #    ln -sf /usr/bin/g++ /usr/bin/g++-10
 
 # Alternatively build gcc from source - takes a LONG time
-ENV GCC_VERSION=11.2.0
+ENV GCC_VERSION=10.3.0 # Same version as Ubuntu gcc-10, 11.2.0 does not work
 RUN dnf update -y && \
    dnf -y group install "Development Tools" && \
    yum config-manager --set-enabled powertools && \
